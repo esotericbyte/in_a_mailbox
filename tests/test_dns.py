@@ -22,10 +22,16 @@ if len(sys.argv) == 4:
 def test(server, description):
 	tests = [
 		(hostname, "A", ipaddr),
+		# NO DOMAIN TAKEOVER! JUST MAIL! 
+		# TO DO: May specify the mailserver subdomain
+		# TO DO: Add optionally add a pages domain like pages.domainname.tld as ngnx served web domain
+		# MAKE NAME SERVER TOTALLY OPTIONAL:
 		#(hostname, "NS", "ns1.%s.;ns2.%s." % (primary_hostname, primary_hostname)),
-		("ns1." + primary_hostname, "A", ipaddr),
-		("ns2." + primary_hostname, "A", ipaddr),
-		("www." + hostname, "A", ipaddr),
+		#("ns1." + primary_hostname, "A", ipaddr),
+		#("ns2." + primary_hostname, "A", ipaddr),
+		# instead of a secondary www.mail.example.com just set a 
+		#  pages.example.com that could be www.example.com or pages.example.com etc
+		#("www." + hostname, "A", ipaddr),
 		(hostname, "MX", "10 " + primary_hostname + "."),
 		(hostname, "TXT", "\"v=spf1 mx -all\""),
 		("mail._domainkey." + hostname, "TXT", "\"v=DKIM1; k=rsa; s=email; \" \"p=__KEY__\""),
@@ -44,6 +50,7 @@ def test_ptr(server, description):
 def test2(tests, server, description):
 	first = True
 	resolver = dns.resolver.get_default_resolver()
+	# This is probably wrong:a
 	resolver.nameservers = [server]
 	for qname, rtype, expected_answer in tests:
 		# do the query and format the result as a string
