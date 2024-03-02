@@ -7,6 +7,9 @@
 # where ipaddr is the IP address of your Mail-in-a-Box
 # and hostname is the domain name to check the DNS for.
 
+# TO DO: RENAME fuctions to describe what they test! 
+# TO DO: Do I want this to print? What about simply returning the strings?
+
 import sys, re, difflib
 import dns.reversename, dns.resolver
 
